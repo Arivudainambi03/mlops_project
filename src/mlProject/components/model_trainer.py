@@ -3,12 +3,19 @@ import os
 from mlProject import logger
 import joblib
 from mlProject.entity.config_entity import ModelTrainerConfig
-
+import yaml
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import accuracy_score, classification_report
+from joblib import dump
 
 
 class ModelTrainer:
     
-    def __init__(self, config:ModelTrainerConfig, modelconfig:) -> None:
+    def __init__(self, config:ModelTrainerConfig, modelconfig) -> None:
         self.config = config
         self.model = modelconfig
     
@@ -22,10 +29,10 @@ class ModelTrainer:
         test_y = test_data[[self.config.target_columns]]
 
         # Create models dictionary from config
-        models = {name: eval(config['models'][name]['class'])() for name in config['models']}
+        models = {name: eval(self.config['models'][name]['class'])() for name in self.config['models']}
 
         # Extract parameters from config
-        params = config['params']
+        params = self.config['params']
 
         best_models = {}
         best_scores = {}
@@ -34,7 +41,7 @@ class ModelTrainer:
         for model_name in models:
             print(f"Tuning hyperparameters for {model_name}...")
             grid_search = GridSearchCV(models[model_name], params[model_name], cv=5, scoring='accuracy')
-            grid_search.fit(X_train, y_train)
+            grid_search.fit(train_x, train_y)
             best_models[model_name] = grid_search.best_estimator_
             best_scores[model_name] = grid_search.best_score_
             print(f"Best parameters for {model_name}: {grid_search.best_params_}")
