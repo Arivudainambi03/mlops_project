@@ -1,0 +1,13 @@
+params:
+  RandomForest:
+    n_estimators: [100, 200]
+    max_depth: [None, 10, 20]
+  SVM:
+    C: [0.1, 1, 10]
+    kernel: ['linear', 'rbf']
+  LogisticRegression:
+    C: [0.1, 1, 10]
+    penalty: ['l2']
+  KNN:
+    n_neighbors: [3, 5, 7]
+    weights: ['uniform', 'distance']

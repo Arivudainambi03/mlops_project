@@ -1,0 +1,9 @@
+models:
+  RandomForest:
+    class: "RandomForestClassifier"
+  SVM:
+    class: "SVC"
+  LogisticRegression:
+    class: "LogisticRegression"
+  KNN:
+    class: "KNeighborsClassifier"
