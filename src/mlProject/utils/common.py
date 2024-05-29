@@ -38,7 +38,7 @@ def read_yaml(path: Path) -> ConfigBox:
         raise e
     
 @ensure_annotations
-def create_dict(filepath: list, verbose = True):
+def create_directories(filepath: list, verbose = True):
     """
     Create list of dict
 

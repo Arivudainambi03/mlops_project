@@ -15,11 +15,19 @@ from joblib import dump
 
 class ModelTrainer:
     
-    def __init__(self, config:ModelTrainerConfig, modelconfig) -> None:
+    def __init__(self, config:ModelTrainerConfig, modelconfig, paramsconfig) -> None:
         self.config = config
-        self.model = modelconfig
-    
+        self.model_config = modelconfig
+        self.params_config = paramsconfig
+
     def train(self):
+        """training the funtion 
+        Model training and the parameter tuning both the operation will be performed 
+
+        return:
+            best model will be exported.
+        
+        """
         train_data = pd.read_csv(self.config.train_data_path)
         test_data = pd.read_csv(self.config.test_data_path)
 
@@ -29,10 +37,10 @@ class ModelTrainer:
         test_y = test_data[[self.config.target_columns]]
 
         # Create models dictionary from config
-        models = {name: eval(self.config['models'][name]['class'])() for name in self.config['models']}
+        models = {name: eval(self.model_config['models'][name]['class'])() for name in self.model_config['models']}
 
         # Extract parameters from config
-        params = self.config['params']
+        params = self.params_config['params']
 
         best_models = {}
         best_scores = {}
@@ -51,3 +59,5 @@ class ModelTrainer:
         best_model = best_models[best_model_name]
 
         print(f"Best model: {best_model_name} with cross-validation score: {best_scores[best_model_name]}")
+        
+        joblib.dump(best_model_name, os.path.join(self.config.root_dir, self.config.model_name))

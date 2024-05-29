@@ -1,0 +1,20 @@
+COLUMNS:
+  age: int64
+  job:	int64	
+  marital:	int64		
+  education: int64		
+  default: int64	
+  balance: int64	
+  housing:	int64
+  loan:	int64	
+  contact:	int64		
+  day_of_week:	Date		
+  month:	Date	
+  duration:	int64	
+  campaign:	int64	
+  pdays: int64
+  previous:	int64	
+  poutcome: int64	
+
+TARGET_COLUMN:
+  y: int64	
