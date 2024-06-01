@@ -30,15 +30,16 @@ class ConfigurationManager:
 
         data_ingestion_config = DataIngestingConfig(
                                     root_dir=config.root_dir,
-                                    source_url=config.source_url,
+                                    source_url=config.source_dir,
                                     local_data_file = config.local_data_file,
                                     unzip_dir=config.unzip_dir)
         
         return data_ingestion_config
     
     def get_data_validation_config(self)-> DataValidationConfig:
-        config = self.config.data_validatation
+        config = self.config.data_validation
         schema = self.schema.COLUMNS
+        target_column = self.schema.TARGET_COLUMN
 
         create_directories([config.root_dir])
 
@@ -46,19 +47,24 @@ class ConfigurationManager:
                                     root_dir=config.root_dir,
                                     STATUS_FILE = config.STATUS_FILE,
                                     unzip_data_dir = config.unzip_data_dir, 
-                                    all_schema = schema
+                                    all_schema = schema,
+                                    target_column= target_column
                                     )
         
         return data_validation_config
     
     def get_data_transformation_config(self)-> DataTransformationConfig:
         config = self.config.data_Transformation
+        schema = self.schema.COLUMNS
+        target_column = self.schema.TARGET_COLUMN
 
         create_directories([config.root_dir])
 
         data_transformation_config = DataTransformationConfig(
                                         root_dir = config.root_dir,
-                                        data_path = config.data_path
+                                        data_path = config.data_path,
+                                        all_schema = schema,
+                                        target_column= target_column
                                         )
 
         return data_transformation_config

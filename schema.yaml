@@ -1,20 +1,27 @@
 COLUMNS:
-  age: int64
-  job:	int64	
-  marital:	int64		
-  education: int64		
-  default: int64	
-  balance: int64	
-  housing:	int64
-  loan:	int64	
-  contact:	int64		
-  day_of_week:	Date		
-  month:	Date	
-  duration:	int64	
-  campaign:	int64	
-  pdays: int64
-  previous:	int64	
-  poutcome: int64	
+    age: int64
+    job: int64
+    marital: int64
+    education: int64
+    default: int64
+    balance: int64
+    housing: int64
+    loan: int64
+    contact: int64
+    day_of_week: Date
+    month: Date
+    duration: int64
+    campaign: int64
+    pdays: int64
+    previous: int64
+    poutcome: int64
+    emp.var.rate: int64
+    emp.var.rate: int64
+    cons.price.idx: int64
+    cons.conf.idx: int64
+    euribor3m: int64
+    nr.employed: int64
 
 TARGET_COLUMN:
-  y: int64	
+    y: int64
+
