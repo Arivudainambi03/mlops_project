@@ -26,6 +26,7 @@ class DataTransformationConfig:
     all_schema: dict
     target_column : dict
 
+
 @dataclass
 class ModelTrainerConfig:
     root_dir: Path
@@ -34,6 +35,8 @@ class ModelTrainerConfig:
     model_name : str
     target_columns: str
     model_dir : Path
+    modelconfig: dict
+    paramsconfig: dict
     
 
 

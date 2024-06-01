@@ -46,9 +46,8 @@ class DataTransformationTrainingConfig:
                 data_transformation = DataTransformation(config=DataTransforamtion_config)
                 df = self.Col_Transformation(df = self.dataset, data_transformation=data_transformation)
                 df, category_mappings = data_transformation.convert_categorical_to_numerical(df = df)
-                selected_list = data_transformation.Recuresive_Feature_Elimination(df = df, no_features_to_select=10)
-
-                data_transformation.train_test_splitting(data= df[selected_list])
+                selected_list, df = data_transformation.Recuresive_Feature_Elimination(df = df, no_features_to_select=10)
+                data_transformation.train_test_splitting(data= df)
                 logger.info(f"All transformation are completed here.")
                 
         except Exception as e:

@@ -15,12 +15,11 @@ from joblib import dump
 
 class ModelTrainer:
     
-    def __init__(self, config:ModelTrainerConfig, modelconfig, paramsconfig) -> None:
+    def __init__(self, config:ModelTrainerConfig) -> None:
         self.config = config
-        self.model_config = modelconfig
-        self.params_config = paramsconfig
 
     def train(self):
+        
         """training the funtion 
         Model training and the parameter tuning both the operation will be performed 
 
@@ -28,19 +27,19 @@ class ModelTrainer:
             best model will be exported.
         
         """
+        target_col = list(self.config.target_columns.keys())
         train_data = pd.read_csv(self.config.train_data_path)
         test_data = pd.read_csv(self.config.test_data_path)
-
-        train_x = train_data.drop([self.config.target_columns], axis= 1)
-        test_x = train_data.drop([self.config.target_columns], axis = 1)
-        train_y = train_data[[self.config.target_columns]]
-        test_y = test_data[[self.config.target_columns]]
+        train_x = train_data.drop(target_col, axis= 1)
+        test_x = train_data.drop(target_col, axis = 1)
+        train_y = train_data[target_col]
+        test_y = test_data[target_col]
 
         # Create models dictionary from config
-        models = {name: eval(self.model_config['models'][name]['class'])() for name in self.model_config['models']}
+        models = {name: eval(self.config.modelconfig['models'][name]['class'])() for name in self.config.modelconfig['models']}
 
         # Extract parameters from config
-        params = self.params_config['params']
+        params = self.config.paramsconfig['params']
 
         best_models = {}
         best_scores = {}

@@ -23,15 +23,16 @@ class DataTransformation:
 
     def Recuresive_Feature_Elimination(self, df, no_features_to_select)->list:
         target_col = self.config.target_column.keys()
-        print(target_col, type(target_col))
         X = df.drop(columns=target_col)
         y = df[target_col]
 
         model = RandomForestClassifier()
         rfe = RFE(model, n_features_to_select = no_features_to_select)
         fit = rfe.fit(X, y)
-        selected_features = X.columns[fit.support_]
-        return selected_features.to_list()
+        selected_features = X.columns[fit.support_].to_list()
+
+        data = pd.concat([df[selected_features], y], axis=1)
+        return selected_features, data
 
     def convert_categorical_to_numerical(self, df, output_file='category_mappings.json'):
 
@@ -55,9 +56,9 @@ class DataTransformation:
         return df, category_mappings
 
     def train_test_splitting(self, data):
-
+        
         # data = pd.read(self.config.data_path)
-        print("trian test splitted")
+
         # split the dataframe
         train, test = train_test_split(data)
 

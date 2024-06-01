@@ -80,7 +80,9 @@ class ConfigurationManager:
                                 test_data_path = config.test_data_path,
                                 model_name = config.model_name,
                                 target_columns= self.schema.TARGET_COLUMN,
-                                model_dir = config.root_dir
+                                model_dir = config.root_dir,
+                                modelconfig = self.model,
+                                paramsconfig = self.params
                                 )
 
         return model_trainer
